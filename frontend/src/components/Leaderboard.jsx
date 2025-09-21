@@ -59,7 +59,7 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-4xl font-arcade  text-white font-bold text-glow-primary text-neon mb-6">
+        <h2 className="text-4xl font-arcade  text-white font-bold text-glow-primary text-neon mb-14">
           LEADERBOARD
         </h2>
         <div className="flex items-center justify-center gap-2 text-[hsl(220,13%,60%)] font-digital mb-4">
@@ -74,7 +74,7 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
         {selectedCubeType !== 'all' && (
           <div className="text-center mb-4">
             <span className={`inline-block px-4 py-2 rounded-full font-arcade text-sm ${getCubeColorClass(selectedCubeType)} bg-black/50 border border-current/30`}>
-              🏆 TOP 20 {selectedCubeType.toUpperCase()} 🏆
+              🏆 TOP 10 {selectedCubeType.toUpperCase()} 🏆
             </span>
           </div>
         )}
@@ -134,7 +134,7 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
       ) : (
         <>
           
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 glow-neon">
+          <div>
             <h3 className="text-2xl text-gray-300 font-arcade  mb-6 text-center">
               🏆  {selectedCubeType === 'all' ? 'Top 10 Overall' : `Top 20 ${selectedCubeType.toUpperCase()}`}
             </h3>
@@ -170,7 +170,7 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
                         <span className="font-digital text-xl font-bold text-foreground truncate">
                           {participant.name}
                         </span>
-                        <span className="text-sm text-[hsl(220,13%,60%)] font-digital">
+                        <span className="text-md text-[hsl(219,33%,83%)] font-digital">
                           #{participant.id}
                         </span>
                       </div>
@@ -207,42 +207,6 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
             </div>
           </div>
 
-          {/* Records by Cube Type */}
-          {Object.entries(groupedData).map(([cubeType, participants]) => {
-            const bestTime = Math.min(...participants.map(p => p.time));
-            const bestParticipant = participants.find(p => p.time === bestTime);
-            
-            return (
-              <div key={cubeType} className="bg-gradient-card border border-muted rounded-lg p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className={`text-xl font-arcade ${getCubeColorClass(cubeType)}`}>
-                    {cubeType.toUpperCase()} RECORDS
-                  </h4>
-                  <span className="text-sm text-[hsl(220,13%,60%)] font-digital">
-                    {participants.length} attempts
-                  </span>
-                </div>
-                
-                {bestParticipant && (
-                  <div className={`p-3 rounded border ${getCubeGlowClass(cubeType)} border-current/50`}>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-digital font-bold text-foreground">
-                          {bestParticipant.name}
-                        </div>
-                        <div className="text-sm text-[hsl(220,13%,60%)] font-digital">
-                          #{bestParticipant.id}
-                        </div>
-                      </div>
-                      <div className={`text-xl font-digital font-bold ${getCubeColorClass(cubeType)}`}>
-                        {formatTime(bestTime)}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
         </>
       )}
     </div>
