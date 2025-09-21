@@ -45,8 +45,8 @@ export const ParticipantDetailsModal = ({
         }}
       >
         <DialogHeader>
-          <DialogTitle className="text-center font-arcade text-2xl text-neon-white text-neon mb-4">
-             JOIN COMPETITION 
+          <DialogTitle className="text-center font-arcade text-2xl text-white  mb-4">
+             JOIN Now
           </DialogTitle>
         </DialogHeader>
 
@@ -112,10 +112,9 @@ export const ParticipantDetailsModal = ({
                 GENERATING ID...
               </>
             ) : (
-              <>
-                <User className="w-5 h-5 mr-2" />
-                GENERATE PARTICIPANT ID
-              </>
+             
+               <p className="text-gray-300">GENERATE ID</p>
+            
             )}
           </Button>
         </form>
