@@ -5,7 +5,7 @@ import { CubeSelector } from "@/components/CubeSelector";
 import { Leaderboard } from "@/components/Leaderboard";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Trophy, RotateCcw, TrophyIcon } from "lucide-react";
+import { Trophy, RotateCcw } from "lucide-react";
 
 const Index = () => {
   const [participantId, setParticipantId] = useState("");
@@ -134,8 +134,8 @@ const Index = () => {
               {currentPhase === "finished" && (
                 <div className="text-center animate-slide-up">
                   <div className="mb-6">
-                    <Trophy className="w-16 h-16 text-neon-yellow mx-auto mb-4 animate-pulse-glow" />
-                    <h3 className="text-3xl font-arcade text-neon-white text-neon">
+                    <Trophy className="w-16 h-16 text-amber-200 mx-auto mb-4 animate-pulse-glow" />
+                    <h3 className="text-3xl font-arcade text-white text-neon">
                       TIME RECORDED!
                     </h3>
                   </div>
@@ -149,8 +149,8 @@ const Index = () => {
                       fontFamily: 'Orbitron, monospace'
                     }}
                   >
-                    <RotateCcw className="w-5 h-5 mr-2" />
-                    NEW ATTEMPT
+                    <RotateCcw className="w-5 h-5 mr-2 text-gray-400" />
+                   <p className="text-gray-400">NEW ATTEMPT</p> 
                   </Button>
                 </div>
               )}
@@ -171,8 +171,8 @@ const Index = () => {
                         fontFamily: 'Orbitron, monospace'
                       }}
                     >
-                      <Trophy className="w-5 h-5 mr-2" />
-                      View Leaderboard
+                      <Trophy className="w-5 h-5 mr-2 text-blue-400" />
+                     <p className="text-blue-400"> View Leaderboard</p> 
                     </Button>
                   </DialogTrigger>
                   <DialogContent
@@ -185,7 +185,7 @@ const Index = () => {
                   >
                     <DialogHeader className="flex-shrink-0">
                       <DialogTitle className="text-center font-arcade text-3xl text-neon-white text-neon mb-4">
-                        🏆 LEADERBOARD 🏆
+                      
                       </DialogTitle>
                     </DialogHeader>
                     <div className="particles-bg p-4 rounded-lg overflow-y-auto flex-1 min-h-0 scrollbar-hide">
@@ -202,7 +202,7 @@ const Index = () => {
                 <Button
                   onClick={clearLeaderboard}
                   variant="destructive"
-                  className="font-arcade hover-glow ripple"
+                  className="font-arcade text-gray-400 hover-glow ripple"
                 >
                   Clear All Records
                 </Button>
