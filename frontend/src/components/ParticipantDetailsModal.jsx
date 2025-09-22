@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { User, Mail, Sparkles } from "lucide-react";
+import { User, Sparkles } from "lucide-react";
 
 export const ParticipantDetailsModal = ({
   open,
@@ -10,14 +10,13 @@ export const ParticipantDetailsModal = ({
   onSubmit
 }) => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name.trim() || !email.trim()) {
-      alert("Please enter both name and email");
+    if (!name.trim()) {
+      alert("Please enter your name");
       return;
     }
 
@@ -25,12 +24,14 @@ export const ParticipantDetailsModal = ({
 
     // Simulate API call
     setTimeout(() => {
-      const id = Math.random().toString(36).substr(2, 9).toUpperCase();
-      onSubmit(id, name, email);
+      // Generate ID from name (first 3 letters + 3 random chars)
+      const namePrefix = name.substring(0, 3).toUpperCase().replace(/[^A-Z]/g, 'X');
+      const randomSuffix = Math.random().toString(36).substr(2, 3).toUpperCase();
+      const id = `${namePrefix}${randomSuffix}`;
+      onSubmit(id, name);
       setIsGenerating(false);
       onOpenChange(false);
       setName("");
-      setEmail("");
     }, 1000);
   };
 
@@ -73,27 +74,6 @@ export const ParticipantDetailsModal = ({
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="modal-email" className="text-gray-200 font-digital block text-center">
-              Email Address
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[hsl(210,100%,60%)]" />
-              <Input
-                id="modal-email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="pl-12 bg-background-card border-glow-primary text-gray-200 placeholder-gray-400 font-digital text-center"
-                style={{
-                  background: 'linear-gradient(135deg, hsl(220, 13%, 10%), hsl(220, 13%, 8%))',
-                  border: '1px solid hsl(210, 100%, 60%)',
-                  boxShadow: '0 0 10px hsl(210, 100%, 60% / 0.3)'
-                }}
-              />
-            </div>
-          </div>
 
           <Button
             type="submit"
@@ -108,8 +88,8 @@ export const ParticipantDetailsModal = ({
           >
             {isGenerating ? (
               <>
-                <Sparkles className="w-5 h-5 mr-2 animate-spin" />
-                GENERATING ID...
+                <Sparkles className="w-5 h-5 mr-2 animate-spin text-gray-200" />
+                <p className='text-gray-200'>GENERATING ID...</p>
               </>
             ) : (
              
