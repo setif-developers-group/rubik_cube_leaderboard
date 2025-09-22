@@ -34,20 +34,22 @@ const Index = () => {
     }
   }, [leaderboardData]);
 
-  const handleParticipantGenerated = (id, name, email) => {
+  const handleParticipantGenerated = (id, name) => {
     setParticipantId(id);
     setParticipantName(name);
     setCurrentPhase("ready");
     setShowNameInput(false);
   };
 
-  const handleTimerComplete = (time) => {
+  const handleTimerComplete = (time, adminEmail = null) => {
     const newEntry = {
       id: participantId,
       name: participantName || `Anonymous ${participantId}`,
       cubeType: selectedCube,
       time,
       timestamp: Date.now(),
+      validatedBy: adminEmail,
+      isValidated: !!adminEmail
     };
 
     setLeaderboardData((prev) =>
@@ -66,6 +68,20 @@ const Index = () => {
   const clearLeaderboard = () => {
     setLeaderboardData([]);
     localStorage.removeItem("rubiks-leaderboard");
+  };
+
+  const startNewAttemptWithSameId = () => {
+    // Keep same participant ID and name, go back to cube selection
+    setCurrentPhase("start");
+    setShowLeaderboard(false);
+  };
+
+  const startNewAttemptWithNewName = () => {
+    // Reset everything including participant info, go back to beginning
+    setParticipantId("");
+    setParticipantName("");
+    setCurrentPhase("start");
+    setShowLeaderboard(false);
   };
 
   return (
@@ -138,20 +154,38 @@ const Index = () => {
                     <h3 className="text-3xl font-arcade text-white text-neon">
                       TIME RECORDED!
                     </h3>
+                    <p className="text-gray-400 font-digital mt-2">
+                      Choose your next action
+                    </p>
                   </div>
-                  <Button
-                    onClick={resetCompetition}
-                    className="hover-glow ripple font-arcade text-lg px-8 py-3"
-                    style={{
-                      background: 'linear-gradient(135deg, hsl(220, 13%, 10%), hsl(220, 13%, 8%))',
-                      border: '1px solid hsl(210, 100%, 60%)',
-                      boxShadow: '0 0 10px hsl(210, 100%, 60% / 0.5), 0 0 20px hsl(210, 100%, 60% / 0.3), 0 0 40px hsl(210, 100%, 60% / 0.1)',
-                      fontFamily: 'Orbitron, monospace'
-                    }}
-                  >
-                    <RotateCcw className="w-5 h-5 mr-2 text-gray-400" />
-                   <p className="text-gray-400">NEW ATTEMPT</p> 
-                  </Button>
+                  <div className="flex flex-col gap-4 max-w-md mx-auto">
+                    <Button
+                      onClick={startNewAttemptWithSameId}
+                      className="hover-glow ripple font-arcade text-lg px-8 py-3"
+                      style={{
+                        background: 'linear-gradient(135deg, hsl(220, 13%, 10%), hsl(220, 13%, 8%))',
+                        border: '1px solid hsl(210, 100%, 60%)',
+                        boxShadow: '0 0 10px hsl(210, 100%, 60% / 0.5), 0 0 20px hsl(210, 100%, 60% / 0.3), 0 0 40px hsl(210, 100%, 60% / 0.1)',
+                        fontFamily: 'Orbitron, monospace'
+                      }}
+                    >
+                      <RotateCcw className="w-5 h-5 mr-2 text-blue-400" />
+                     <p className="text-blue-400"> TRY AGAIN</p>
+                    </Button>
+                    <Button
+                      onClick={startNewAttemptWithNewName}
+                      className="hover-glow ripple font-arcade text-lg px-8 py-3"
+                      style={{
+                        background: 'linear-gradient(135deg, hsl(220, 13%, 10%), hsl(220, 13%, 8%))',
+                        border: '1px solid hsl(0, 100%, 50%)',
+                        boxShadow: '0 0 10px hsl(0, 100%, 50% / 0.5), 0 0 20px hsl(0, 100%, 50% / 0.3), 0 0 40px hsl(0, 100%, 50% / 0.1)',
+                        fontFamily: 'Orbitron, monospace'
+                      }}
+                    >
+                      <RotateCcw className="w-5 h-5 mr-2 text-red-400" />
+                     <p className="text-red-400">NEW GAME</p>
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>
