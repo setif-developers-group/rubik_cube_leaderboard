@@ -1,4 +1,4 @@
-import { Trophy, Medal, Award, Clock, User, Box } from "lucide-react";
+import { Trophy, Medal, Award, Clock, User, Box, Shield, ShieldCheck } from "lucide-react";
 
 export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }) => {
   const formatTime = (milliseconds) => {
@@ -28,16 +28,8 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
     }
   };
 
-  const getCubeGlowClass = (cubeType) => {
-    switch (cubeType) {
-      case '2x2': return 'glow-2x2';
-      case '3x3': return 'glow-3x3';
-      case '4x4': return 'glow-4x4';
-      default: return 'glow-neon';
-    }
-  };
 
-  // Group data by cube type for better visualization
+  
   const groupedData = data.reduce((acc, participant) => {
     if (!acc[participant.cubeType]) {
       acc[participant.cubeType] = [];
@@ -132,7 +124,7 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
           </p>
         </div>
       ) : (
-        <>
+       
           
           <div>
             <h3 className="text-2xl text-gray-300 font-arcade  mb-6 text-center">
@@ -173,6 +165,9 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
                         <span className="text-md text-[hsl(219,33%,83%)] font-digital">
                           #{participant.id}
                         </span>
+                        {participant.isValidated && (
+                          <ShieldCheck className="w-4 h-4 text-green-400" title={`Validated by: ${participant.validatedBy}`} />
+                        )}
                       </div>
                       
                       <div className="flex items-center gap-3 text-sm">
@@ -207,7 +202,7 @@ export const Leaderboard = ({ data, selectedCubeType = 'all', onCubeTypeChange }
             </div>
           </div>
 
-        </>
+       
       )}
     </div>
   );
