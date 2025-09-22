@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Play, Square, RotateCcw } from "lucide-react";
+import { AdminValidationModal } from "@/components/AdminValidationModal";
+import { QRCodeModal } from "@/components/QRCodeModal";
 
 export const Timer = ({
   cubeType,
@@ -11,6 +13,8 @@ export const Timer = ({
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [showValidationModal, setShowValidationModal] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
 
   // Timer effect
   useEffect(() => {
@@ -45,16 +49,30 @@ export const Timer = ({
 
   const stopTimer = () => {
     setIsRunning(false);
-    setIsFinished(true);
-    onTimerComplete(time);
-    onPhaseChange("finished");
+    setShowValidationModal(true);
   };
 
   const resetTimer = () => {
     setTime(0);
     setIsRunning(false);
     setIsFinished(false);
+    setShowValidationModal(false);
     onPhaseChange("ready");
+  };
+
+  const handleValidation = (isValidated, adminEmail) => {
+    if (isValidated) {
+      setIsFinished(true);
+      onTimerComplete(time, adminEmail);
+      onPhaseChange("finished");
+    } else {
+      // Reset to start state if validation is cancelled (go back to beginning)
+      setTime(0);
+      setIsRunning(false);
+      setIsFinished(false);
+      setShowValidationModal(false);
+      onPhaseChange("start");
+    }
   };
 
   const getCubeThemeClass = () => {
@@ -88,9 +106,13 @@ export const Timer = ({
       {/* Participant Info */}
       <div className="animate-slide-up">
         <div
-          className={`inline-block px-6 border-2 border-gray-300 py-3 rounded-sm border ${getCubeThemeClass()} `}
+          onClick={() => setShowQRModal(true)}
+          className={`inline-block px-6 border-2 border-gray-300 py-3 rounded-sm border ${getCubeThemeClass()} cursor-pointer hover:scale-105 transition-transform duration-200 hover:shadow-lg`}
+          style={{
+            boxShadow: '0 0 10px currentColor / 0.3'
+          }}
         >
-          <div className="text-2xl  font-arcade font-bold text-gray-100">
+          <div className="text-2xl font-arcade font-bold text-gray-100">
             #{participantId}
           </div>
           {participantName && (
@@ -100,6 +122,9 @@ export const Timer = ({
           )}
           <div className={`text-sm font-digital text-gray-600 ${getCubeColorClass()}`}>
             {cubeType.toUpperCase()} CUBE
+          </div>
+          <div className="text-xs text-gray-500 font-digital mt-1 text-center">
+            Click to view QR Code
           </div>
         </div>
       </div>
@@ -172,6 +197,23 @@ export const Timer = ({
           <p className="animate-pulse-glow text-gray-400">SOLVING IN PROGRESS...</p>
         </div>
       )}
+
+      <AdminValidationModal
+        open={showValidationModal}
+        onOpenChange={setShowValidationModal}
+        onValidation={handleValidation}
+        time={time}
+        participantName={participantName}
+        participantId={participantId}
+        cubeType={cubeType}
+      />
+
+      <QRCodeModal
+        open={showQRModal}
+        onOpenChange={setShowQRModal}
+        participantId={participantId}
+        participantName={participantName}
+      />
     </div>
   );
 };
