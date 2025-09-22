@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ParticipantDetailsModal } from "@/components/ParticipantDetailsModal";
-import { User, Sparkles } from "lucide-react";
+import { User } from "lucide-react";
 
 export const ParticipantGenerator = ({
   onParticipantGenerated
@@ -10,7 +10,7 @@ export const ParticipantGenerator = ({
 
   return (
     <div className="text-center space-y-6 relative overflow-hidden">
-      {/* Particules décoratives */}
+     
       <div className="absolute inset-0 pointer-events-none">
         <div className="animate-pulse-glow absolute top-10 left-1/4 w-3 h-3 rounded-full bg-glow-primary blur-md"></div>
         <div className="animate-pulse-glow absolute bottom-12 right-1/3 w-4 h-4 rounded-full bg-glow-secondary blur-lg"></div>
