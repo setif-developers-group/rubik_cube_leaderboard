@@ -31,6 +31,35 @@ export const Timer = ({
     };
   }, [isRunning]);
 
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      
+      if (event.code === 'Space' && event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA') {
+        event.preventDefault();
+
+        if (!isRunning && !isFinished) {
+        
+          startTimer();
+        } else if (isRunning) {
+          
+          stopTimer();
+        } else if (isFinished) {
+         
+          resetTimer();
+        }
+      }
+    };
+
+   
+    window.addEventListener('keydown', handleKeyPress);
+
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [isRunning, isFinished]);
+
   const formatTime = useCallback((milliseconds) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
@@ -66,7 +95,7 @@ export const Timer = ({
       onTimerComplete(time, adminEmail);
       onPhaseChange("finished");
     } else {
-      // Reset to start state if validation is cancelled (go back to beginning)
+
       setTime(0);
       setIsRunning(false);
       setIsFinished(false);
@@ -151,20 +180,19 @@ export const Timer = ({
         {!isRunning && !isFinished && (
           <button
             onClick={startTimer}
-            className={` text-gray-300 border-2 border-gray-300 ${getCubeThemeClass()} hover-glow ripple font-arcade text-xl px-8 py-4`}
+            className={`text-gray-300 border-2 border-gray-300 ${getCubeThemeClass()} hover-glow ripple font-arcade text-xl px-8 py-4 transition-all duration-200 ${!isRunning && !isFinished ? 'animate-pulse-glow' : ''}`}
           >
             <div className="flex">
               <Play className="w-6 h-6 mr-2" />
               START
             </div>
-
           </button>
         )}
 
         {isRunning && (
           <button
             onClick={stopTimer}
-            className=" border-2 border-red-500  hover-glow ripple font-arcade text-xl px-8 py-4 text-gray-200"
+            className="border-2 border-red-500 hover-glow ripple font-arcade text-xl px-8 py-4 text-gray-200 animate-pulse"
           >
             <Square className="w-6 h-6 mr-2" />
             STOP
@@ -174,9 +202,9 @@ export const Timer = ({
         {(isRunning || isFinished) && (
           <button
             onClick={resetTimer}
-            className=" border border-muted hover-glow ripple font-arcade text-gray-200 text-lg px-6 py-4"
+            className="border border-muted hover-glow ripple font-arcade text-gray-200 text-lg px-6 py-4"
           >
-            <RotateCcw className="w-5 h-5 mr-2" />
+            <RotateCcw className="w-5 h-5 mr-2 text-gray-200" />
             RESET
           </button>
         )}
@@ -184,19 +212,28 @@ export const Timer = ({
 
       {/* Instructions */}
       {!isRunning && !isFinished && (
-        <div className="animate-slide-up text-[hsl(220,13%,60%)] font-digital">
+        <div className="animate-slide-up text-[hsl(220,13%,60%)] font-digital space-y-2">
           <p>
             Get ready with your {cubeType} cube and click START when you're
             ready to begin!
           </p>
+         
         </div>
       )}
 
-      {isRunning && (
-        <div className="animate-slide-up text-glow-secondary font-digital text-lg">
-          <p className="animate-pulse-glow text-gray-400">SOLVING IN PROGRESS...</p>
-        </div>
-      )}
+     {isRunning && (
+       <div className="animate-slide-up text-glow-secondary font-digital text-lg space-y-1">
+         <p className="animate-pulse-glow text-gray-400">SOLVING IN PROGRESS...</p>
+        
+       </div>
+     )}
+
+     {isFinished && (
+       <div className="animate-slide-up text-glow-success font-digital text-lg space-y-1">
+         <p className="text-green-400">TIMER COMPLETE!</p>
+       
+       </div>
+     )}
 
       <AdminValidationModal
         open={showValidationModal}
