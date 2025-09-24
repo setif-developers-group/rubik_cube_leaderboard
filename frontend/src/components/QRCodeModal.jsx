@@ -50,7 +50,7 @@ export const QRCodeModal = ({
             </div>
           </div>
 
-          
+
           <div className="bg-white p-4 rounded-lg">
             <img
               src={qrCodeUrl}
@@ -59,7 +59,7 @@ export const QRCodeModal = ({
             />
           </div>
 
-          
+
           <div className="flex items-center gap-2 bg-black/30 p-3 rounded-lg border border-gray-600">
             <span className="font-digital text-gray-300">ID:</span>
             <span className="font-arcade text-lg text-[hsl(210,100%,60%)] font-bold">
