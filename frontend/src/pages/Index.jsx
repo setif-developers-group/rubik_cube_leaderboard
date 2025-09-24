@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Trophy, RotateCcw } from "lucide-react";
 
+
 const Index = () => {
   const [participantId, setParticipantId] = useState("");
   const [participantName, setParticipantName] = useState("");
@@ -19,7 +20,7 @@ const Index = () => {
   const [selectedLeaderboardFilter, setSelectedLeaderboardFilter] = useState('all');
   // valeurs possibles: "start" | "ready" | "solving" | "finished"
 
-  
+
   useEffect(() => {
     const stored = localStorage.getItem("rubiks-leaderboard");
     if (stored) {
@@ -27,7 +28,7 @@ const Index = () => {
     }
   }, []);
 
- 
+
   useEffect(() => {
     if (leaderboardData.length > 0) {
       localStorage.setItem("rubiks-leaderboard", JSON.stringify(leaderboardData));
@@ -59,25 +60,18 @@ const Index = () => {
     setShowLeaderboard(true);
   };
 
-  const resetCompetition = () => {
-    setParticipantId("");
-    setParticipantName("");
-    setCurrentPhase("start");
-  };
+ 
 
-  const clearLeaderboard = () => {
-    setLeaderboardData([]);
-    localStorage.removeItem("rubiks-leaderboard");
-  };
+
 
   const startNewAttemptWithSameId = () => {
-    // Keep same participant ID and name, go back to cube selection
+
     setCurrentPhase("start");
     setShowLeaderboard(false);
   };
 
   const startNewAttemptWithNewName = () => {
-    // Reset everything including participant info, go back to beginning
+
     setParticipantId("");
     setParticipantName("");
     setCurrentPhase("start");
@@ -98,7 +92,11 @@ const Index = () => {
           >
             SPEED COMPETITION
           </h2>
-          <div className="mt-6 flex justify-center gap-4">
+          <div className="flex justify-center mt-2" >
+            <img className="h-24 w-24 " src="./logo.png" alt="SDGlogo" />
+          </div>
+
+          <div className="mt-9 flex justify-center gap-4">
             <div className="w-4 h-4 rounded-full animate-pulse-glow bg-[hsl(0,100%,60%)] shadow-[0_0_10px_hsl(0,100%,60%)]"></div>
             <div
               className="w-4 h-4 rounded-full animate-pulse-glow bg-[hsl(120,100%,50%)] shadow-[0_0_10px_hsl(120,100%,50%)]"
@@ -109,11 +107,12 @@ const Index = () => {
               style={{ animationDelay: "1s" }}
             ></div>
           </div>
+
         </header>
 
         {/* Main Content */}
         <div className="grid gap-8">
-         
+
           <div className="space-y-8">
             {/* Cube Selector */}
             <div className="animate-slide-up" style={{ animationDelay: "0.2s" }}>
@@ -170,7 +169,7 @@ const Index = () => {
                       }}
                     >
                       <RotateCcw className="w-5 h-5 mr-2 text-blue-400" />
-                     <p className="text-blue-400"> TRY AGAIN</p>
+                      <p className="text-blue-400"> TRY AGAIN</p>
                     </Button>
                     <Button
                       onClick={startNewAttemptWithNewName}
@@ -183,7 +182,7 @@ const Index = () => {
                       }}
                     >
                       <RotateCcw className="w-5 h-5 mr-2 text-red-400" />
-                     <p className="text-red-400">NEW GAME</p>
+                      <p className="text-red-400">NEW GAME</p>
                     </Button>
                   </div>
                 </div>
@@ -206,7 +205,7 @@ const Index = () => {
                       }}
                     >
                       <Trophy className="w-5 h-5 mr-2 text-blue-400" />
-                     <p className="text-blue-400"> View Leaderboard</p> 
+                      <p className="text-blue-400"> View Leaderboard</p>
                     </Button>
                   </DialogTrigger>
                   <DialogContent
@@ -219,7 +218,7 @@ const Index = () => {
                   >
                     <DialogHeader className="flex-shrink-0">
                       <DialogTitle className="text-center font-arcade text-3xl text-neon-white text-neon mb-4">
-                      
+
                       </DialogTitle>
                     </DialogHeader>
                     <div className="particles-bg p-4 rounded-lg overflow-y-auto flex-1 min-h-0 scrollbar-hide">
@@ -232,15 +231,6 @@ const Index = () => {
                   </DialogContent>
                 </Dialog>
               )}
-              {leaderboardData.length > 0 && (
-                <Button
-                  onClick={clearLeaderboard}
-                  variant="destructive"
-                  className="font-arcade text-gray-400 hover-glow ripple"
-                >
-                  Clear All Records
-                </Button>
-              )}
             </div>
           </div>
         </div>
@@ -250,3 +240,8 @@ const Index = () => {
 };
 
 export default Index;
+
+
+
+
+
