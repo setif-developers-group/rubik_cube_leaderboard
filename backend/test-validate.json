@@ -1,0 +1,12 @@
+{
+  "qrData": {
+    "sessionId": "session_1758989670559_8h2riruh6",
+    "type": "admin_session",
+    "timestamp": 1695825600000,
+    "email": "admin@test.com"
+  },
+  "participantId": "player001",
+  "participantName": "Alice",
+  "time": "45.67",
+  "scramble": "R U R' U'"
+}
