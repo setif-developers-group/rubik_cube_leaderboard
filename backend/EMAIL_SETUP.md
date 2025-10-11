@@ -54,11 +54,6 @@ curl -X POST http://localhost:5000/api/admin/generate-qr \
 
 ## 📋 Configuration Actuelle
 
-### **Variables d'environnement (.env) :**
-```env
-EMAIL_USER=yasmineharfouche0@gmail.com
-EMAIL_PASS=Nekooooo2526@
-```
 
 ### **Si ça ne marche pas :**
 1. Vérifiez que l'email est correct
