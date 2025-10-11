@@ -15,11 +15,6 @@ Votre QR code se génère correctement, mais vous ne recevez pas l'email. C'est 
    - Nommez-le "Rubiks Backend"
    - Copiez le mot de passe généré (16 caractères)
 
-3. **Mettez à jour votre `.env` :**
-   ```env
-   EMAIL_USER=votre-email@gmail.com
-   EMAIL_PASS=le-mot-de-passe-16-caracteres
-   ```
 
 ### **Option 2 : Less Secure Apps (Déprécié)**
 
